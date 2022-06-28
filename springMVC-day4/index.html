@@ -1,0 +1,950 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.2.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/favicon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.ico">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.ico">
+  <link rel="mask-icon" href="/images/favicon.png" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+  <link rel="stylesheet" href="/lib/pace/pace-theme-minimal.min.css">
+  <script src="/lib/pace/pace.min.js"></script>
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"qvq-ovo.github.io","root":"/","scheme":"Mist","version":"7.8.0","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":true,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":true},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="知识点:  SpringMVC的视图  三种不同的视图的用法   RESTFul的理解和使用  模拟delete和put请求   RESTFul案例讲解  增删改查四个1用法">
+<meta property="og:type" content="article">
+<meta property="og:title" content="springMVC-day4">
+<meta property="og:url" content="https://qvq-ovo.github.io/springMVC-day4/index.html">
+<meta property="og:site_name" content="LiHui&#39;s Website">
+<meta property="og:description" content="知识点:  SpringMVC的视图  三种不同的视图的用法   RESTFul的理解和使用  模拟delete和put请求   RESTFul案例讲解  增删改查四个1用法">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://qvq-ovo.github.io/springMVC-day4/图片路径">
+<meta property="article:published_time" content="2022-05-25T08:08:37.000Z">
+<meta property="article:modified_time" content="2022-05-29T13:43:03.594Z">
+<meta property="article:author" content="Li Hui">
+<meta property="article:tag" content="SpringMVC">
+<meta property="article:tag" content="尚硅谷">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://qvq-ovo.github.io/springMVC-day4/图片路径">
+
+<link rel="canonical" href="https://qvq-ovo.github.io/springMVC-day4/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>springMVC-day4 | LiHui's Website</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+<style>.darkmode--activated{--body-bg-color:#282828;--content-bg-color:#333;--card-bg-color:#555;--text-color:#ccc;--blockquote-color:#bbb;--link-color:#ccc;--link-hover-color:#eee;--brand-color:#ddd;--brand-hover-color:#ddd;--table-row-odd-bg-color:#282828;--table-row-hover-bg-color:#363636;--menu-item-bg-color:#555;--btn-default-bg:#222;--btn-default-color:#ccc;--btn-default-border-color:#555;--btn-default-hover-bg:#666;--btn-default-hover-color:#ccc;--btn-default-hover-border-color:#666;--highlight-background:#282b2e;--highlight-foreground:#a9b7c6;--highlight-gutter-background:#34393d;--highlight-gutter-foreground:#9ca9b6}.darkmode--activated img{opacity:.75}.darkmode--activated img:hover{opacity:.9}.darkmode--activated code{color:#69dbdc;background:0 0}button.darkmode-toggle{z-index:9999}.darkmode-ignore,img{display:flex!important}.beian img{display:inline-block!important}</style></head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+    <a target="_blank" rel="noopener" href="https://github.com/qvq-ovo" class="github-corner" aria-label="View source on GitHub">
+    <svg width="80" height="80" viewBox="0 0 250 250" style="fill:#64CEAA; color:#fff; position: absolute; top: 0; border: 0; left: 0; transform: scale(-1, 1);" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body">
+    </path></svg>
+    </a><style>.github-corner:hover .octo-arm{animation:octocat-wave 560ms ease-in-out}@keyframes octocat-wave{0%,100%{transform:rotate(0)}20%,60%{transform:rotate(-25deg)}40%,80%{transform:rotate(10deg)}}@media (max-width:500px){.github-corner:hover .octo-arm{animation:none}.github-corner .octo-arm{animation:octocat-wave 560ms ease-in-out}}</style>
+
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">LiHui's Website</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">Hi, nice to meet you!</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://qvq-ovo.github.io/springMVC-day4/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/user.jpg">
+      <meta itemprop="name" content="Li Hui">
+      <meta itemprop="description" content="以梦为马，明日天涯。。。">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="LiHui's Website">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          springMVC-day4
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2022-05-25 16:08:37" itemprop="dateCreated datePublished" datetime="2022-05-25T16:08:37+08:00">2022-05-25</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2022-05-29 21:43:03" itemprop="dateModified" datetime="2022-05-29T21:43:03+08:00">2022-05-29</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/SSM/" itemprop="url" rel="index"><span itemprop="name">SSM</span></a>
+                </span>
+            </span>
+
+          
+            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span><br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>4.8k</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>知识点:</p>
+<ul>
+<li>SpringMVC的视图
+<ul>
+<li>三种不同的视图的用法</li>
+</ul>
+</li>
+<li>RESTFul的理解和使用
+<ul>
+<li>模拟<code>delete</code>和<code>put</code>请求</li>
+</ul>
+</li>
+<li>RESTFul案例讲解
+<ul>
+<li>增删改查四个1用法</li>
+</ul>
+</li>
+</ul>
+<span id="more"></span>
+<h2 id="SpringMVC的视图">SpringMVC的视图</h2>
+<p>路径:<code>/springMVC-study/springMVC-demo03</code>(和昨天的为同一个环境空间)<br>
+在控制层新建一个<code>ViewController</code>的类.</p>
+<h3 id="概念">概念</h3>
+<p>SpringMVC中的视图是View接口，视图的作用渲染数据，将模型Model中的数据展示给用户</p>
+<p>SpringMVC视图的种类很多，默认有<strong>转发视图</strong>和<strong>重定向视图</strong></p>
+<p>如果工程引入jstl的依赖，转发视图会自动转换为JstlView</p>
+<p>若使用的视图技术为<code>Thymeleaf</code>，在SpringMVC的配置文件中配置了Thymeleaf的视图解析器,由此视图解析器解析之后所得到的是ThymeleafView</p>
+<h3 id="ThymeleafView"><code>ThymeleafView</code></h3>
+<p>这个视图是要我们在配置文件中配置好的.</p>
+<p>当控制器方法中所设置的视图名称<mark>没有任何前缀</mark>时,此时的视图名称会被SpringMVC配置文件中所配置的视图解析器解析,视图名称拼接视图前缀和视图后缀所得到的最终路径,会通过转发的方式实现跳转.<br>
+创建示例:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@RequestMapping(&quot;/testThymeleafView&quot;)</span></span><br><span class="line"><span class="keyword">public</span> String <span class="title function_">testThymeleafView</span><span class="params">()</span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="string">&quot;success&quot;</span>;</span><br><span class="line">&#125;</span><br><span class="line">````</span><br><span class="line">然后老师就带着我们打断点.看源码.</span><br><span class="line"></span><br><span class="line">### 转发视图</span><br><span class="line">SpringMVC中默认的转发视图是`InternalResourceView`</span><br><span class="line"></span><br><span class="line">SpringMVC中创建转发视图:</span><br><span class="line">　　当控制器方法中所设置的视图名称以`<span class="string">&quot;forward:&quot;</span>`为前缀时,创建`InternalResourceView`视图.</span><br><span class="line">　　此时的视图名称不会被SpringMVC配置文件中所配置的视图解析器解析,而是会将前缀`<span class="string">&quot;forward:&quot;</span>`去掉,剩余部分作为最终路径通过转发的方式实现跳转.</span><br><span class="line"></span><br><span class="line">使用示例:</span><br><span class="line">```java</span><br><span class="line"><span class="comment">// 转发视图InternalResourceView</span></span><br><span class="line"><span class="meta">@RequestMapping(&quot;/testForward&quot;)</span></span><br><span class="line"><span class="keyword">public</span> String <span class="title function_">testForward</span><span class="params">()</span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="string">&quot;forward:/testThymeleafView&quot;</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><mark>这个用的少.</mark></p>
+<h3 id="重定向视图">重定向视图</h3>
+<p>SpringMVC中默认的重定向视图是<code>RedirectView</code></p>
+<p>SpringMVC中创建重定向视图:<br>
+　　当控制器方法中所设置的视图名称以<code>&quot;redirect:&quot;</code>为前缀时，创建RedirectView视图.<br>
+　　此时的视图名称不会被SpringMVC配置文件中所配置的视图解析器解析,而是会将前缀<code>&quot;redirect:&quot;</code>去掉,剩余部分作为最终路径通过重定向的方式实现跳转.</p>
+<p>使用示例:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 重定向视图RedirectView</span></span><br><span class="line"><span class="meta">@RequestMapping(&quot;/testRedirect&quot;)</span></span><br><span class="line"><span class="keyword">public</span> String <span class="title function_">testRedirect</span><span class="params">()</span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="string">&quot;redirect:/testThymeleafView&quot;</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>注：</p>
+<p>重定向视图在解析时，会先将redirect:前缀去掉.<br>
+然后会判断剩余部分是否以/开头,若是则会自动拼接上下文路径</p>
+</blockquote>
+<p>回忆:重定向和转发之间的联系和区别.</p>
+<h3 id="视图控制器view-controller">视图控制器<code>view-controller</code></h3>
+<h4 id="作用">作用</h4>
+<p>当控制器方法中,仅仅用来实现页面跳转.即只需要设置视图名称时,可以将处理器方法使用<code>view-controller</code>标签进行表示.</p>
+<p>比如这样的控制器方法:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@RequestMapping(&quot;/&quot;)</span></span><br><span class="line"><span class="keyword">public</span> String <span class="title function_">index</span><span class="params">()</span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="string">&quot;index&quot;</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="使用">使用</h4>
+<p>在<code>springMVC.xml</code>中配置.</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!--通过视图控制器配置转发--&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">mvc:view-controller</span> <span class="attr">path</span>=<span class="string">&quot;/&quot;</span> <span class="attr">view-name</span>=<span class="string">&quot;index&quot;</span> /&gt;</span></span><br></pre></td></tr></table></figure>
+<p>可以和上面的java代码对比.就是一种简写.<br>
+<code>@RequestMapping</code>中的东西就是<code>path</code>上的东西.<br>
+返回值就是<code>view-name</code>上的东西.</p>
+<div class="danger">
+<p><strong>注意</strong><br>
+当我们在<code>springMVC.xml</code>中配置了一个<code>view-controller</code>时.之前在控制器中所写的请求映射将全部失效.</p>
+</div>
+<p>不过这个失效也有对应的解决办法:</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!--开启MVC的注解驱动--&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">mvc:annotation-driven</span> /&gt;</span></span><br></pre></td></tr></table></figure>
+<p><strong>这个方法在非常多的地方有用</strong>.<br>
+基本上是算是一定要写的,只不过在不同的场景写解决的问题不同.</p>
+<p>所以,如果<mark>要同时使用<code>view-controller</code>和控制器方法来配置请求映射时.一定要开启MVC的注解驱动.</mark></p>
+<h3 id="SpringMVC的视图解析器-InternalResourceViewResolver">SpringMVC的视图解析器:<code>InternalResourceViewResolver</code></h3>
+<blockquote>
+<p>在实际应用中InternalResourceViewResolver也是使用的最广泛的一个视图解析器.</p>
+</blockquote>
+<p>这个视图解析器是用来解析jsp页面的.<br>
+老师的<a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1Ry4y1574R?p=49">讲解视频</a>.<br>
+这里就不做对应的笔记了.</p>
+<h3 id="总结-5">总结</h3>
+<p><code>ThymeleafView</code>: 在<code>springMVC.xml</code>中配置好,控制器方法只需要返回对应页面的名字即可.</p>
+<p>转发视图: 在将要转发的地址前加上<code>&quot;forward:&quot;</code>作为前缀.</p>
+<p>重定向视图: 在地址前加上&quot;redirect:&quot;`作为前缀.</p>
+<p>视图控制器<code>view-controller</code>: 简化某些简单的视图控制器.一般会搭配上MVC的注解驱动一起使用.</p>
+<h2 id="RESTFul概念">RESTFul概念</h2>
+<p>是一种软件架构的风格.</p>
+<h3 id="RESTFul简介">RESTFul简介</h3>
+<blockquote>
+<p>RESTFUL是一种网络应用程序的设计风格和开发方式,基于HTTP,可以使用XML格式定义或JSON格式定义.<br>
+RESTFUL适用于移动互联网厂商作为业务接口的场景,实现第三方OTT调用移动网络资源的功能,动作类型为新增、变更、删除所调用资源。来自百度百科</p>
+</blockquote>
+<p>REST: <strong>Re</strong>presentational <strong>S</strong>tate <strong>T</strong>ransfer，表现层资源状态转移.</p>
+<p>资源状态: <strong>资源的表述</strong>是一段对于资源在某个特定时刻的状态的描述.<br>
+状态转移: 在客户端和服务器端之间转移(transfer)代表资源状态的表述.</p>
+<p><strong>RESTFUL特点</strong>:</p>
+<ol>
+<li>每一个URI代表1种资源；</li>
+<li>客户端使用GET、POST、PUT、DELETE4个表示操作方式的动词对服务端资源进行操作.</li>
+<li>通过操作资源的表现形式来操作资源</li>
+<li>资源的表现形式是XML或者HTML</li>
+<li>客户端与服务端之间的交互在请求之间是无状态的,从客户端到服务端的每个请求都必须包含理解请求所必需的信息.</li>
+</ol>
+<p><strong>RESTFul的核心</strong>: <mark>请求地址不变,根据不同的请求方式,对资源进行不同的操作.</mark></p>
+<h3 id="RESTFul的实现">RESTFul的实现</h3>
+<p>具体的来讲,就是HTTP中四个操作的动词:<code>GET</code>,<code>POST</code>,<code>PUT</code>,<code>DELETE</code>.<br>
+四种操作:</p>
+<ul>
+<li><code>GET</code>: 用来获取资源</li>
+<li><code>POST</code>: 用来新建资源(也可以用于更新资源)</li>
+<li><code>PUT</code>: 用来更新资源</li>
+<li><code>DELETE</code>: 用来删除资源</li>
+</ul>
+<p>REST 风格提倡 URL 地址使用统一的风格设计,从前到后各个单词使用斜杠分开.<br>
+不使用问号键值对方式携带请求参数,而是将要发送给服务器的数据作为 URL 地址的一部分,以保证整体风格的一致性。</p>
+<table>
+<thead>
+<tr>
+<th>操作</th>
+<th>传统方式</th>
+<th>REST风格</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>查询操作</td>
+<td>getUserById?id=1</td>
+<td>user/1–&gt;get请求方式</td>
+</tr>
+<tr>
+<td>保存操作</td>
+<td>saveUser</td>
+<td>user–&gt;post请求方式</td>
+</tr>
+<tr>
+<td>删除操作</td>
+<td>deleteUser?id=1</td>
+<td>user/1–&gt;delete请求方式</td>
+</tr>
+<tr>
+<td>更新操作</td>
+<td>updateUser</td>
+<td>user–&gt;put请求方式</td>
+</tr>
+</tbody>
+</table>
+<p>怎么说呢,这个想法很好,但这样做后uri栏中就没有用?那么直观了.</p>
+<h3 id="使用RESTFul模拟get和post请求">使用RESTFul模拟get和post请求</h3>
+<p>用户操作中的查询和增加用到的就是<code>GET</code>和<code>POST</code>请求.</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 查询全部用户</span></span><br><span class="line"><span class="meta">@RequestMapping(value = &quot;/user&quot;, method = RequestMethod.GET)</span></span><br><span class="line"><span class="keyword">public</span> String <span class="title function_">getAllUser</span><span class="params">()</span>&#123;</span><br><span class="line">    System.out.println(<span class="string">&quot;查询所有用户信息&quot;</span>);</span><br><span class="line">    <span class="keyword">return</span> <span class="string">&quot;success&quot;</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 查询指定id的用户信息</span></span><br><span class="line"><span class="meta">@RequestMapping(value = &quot;/user/&#123;id&#125;&quot;, method = RequestMethod.GET)</span></span><br><span class="line"><span class="comment">//这里要用@PathVarible来获取请求路径中的参数</span></span><br><span class="line"><span class="keyword">public</span> String <span class="title function_">getUserById</span><span class="params">(<span class="meta">@PathVariable(&quot;id&quot;)</span> Integer id)</span>&#123;</span><br><span class="line">    System.out.println(<span class="string">&quot;根据id查询用户: &quot;</span> + id);</span><br><span class="line">    <span class="keyword">return</span> <span class="string">&quot;success&quot;</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 添加用户</span></span><br><span class="line"><span class="meta">@RequestMapping(value = &quot;/user&quot;,method = RequestMethod.POST)</span></span><br><span class="line"><span class="keyword">public</span> String <span class="title function_">insertUser</span><span class="params">(String username,String password)</span>&#123;</span><br><span class="line">    System.out.println(<span class="string">&quot;添加用户:&quot;</span> + username + <span class="string">&quot;,&quot;</span> + password);</span><br><span class="line">    <span class="keyword">return</span> <span class="string">&quot;success&quot;</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这样的代码前面已经写过好多遍了.</p>
+<p>对应的用户操作代码:</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">a</span> <span class="attr">th:href</span>=<span class="string">&quot;@&#123;/user&#125;&quot;</span>&gt;</span>查询所有用户信息<span class="tag">&lt;/<span class="name">a</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">br</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">a</span> <span class="attr">th:href</span>=<span class="string">&quot;@&#123;/user/1&#125;&quot;</span>&gt;</span>查询指定id的用户信息<span class="tag">&lt;/<span class="name">a</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">br</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">form</span> <span class="attr">th:action</span>=<span class="string">&quot;@&#123;/user&#125;&quot;</span> <span class="attr">method</span>=<span class="string">&quot;post&quot;</span>&gt;</span></span><br><span class="line">    用户名:<span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;text&quot;</span> <span class="attr">name</span>=<span class="string">&quot;username&quot;</span>&gt;</span><span class="tag">&lt;<span class="name">br</span>&gt;</span></span><br><span class="line">    密码:<span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;text&quot;</span> <span class="attr">name</span>=<span class="string">&quot;password&quot;</span>&gt;</span><span class="tag">&lt;<span class="name">br</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;submit&quot;</span> <span class="attr">value</span>=<span class="string">&quot;添加&quot;</span>&gt;</span><span class="tag">&lt;<span class="name">br</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">form</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>至于<code>PUT</code>和<code>DELETE</code>请求,浏览器不支持,不能直接使用.</p>
+<h3 id="使用HiddenHttpMethodFilter处理PUT和DELETE请求">使用<code>HiddenHttpMethodFilter</code>处理<code>PUT</code>和<code>DELETE</code>请求</h3>
+<p><code>HiddenHttpMethodFilter</code>是一个过滤器.一般用来处理<code>put</code>和<code>delete</code>请求.</p>
+<p><strong>HiddenHttpMethodFilter</strong> 处理<code>put</code>和<code>delete</code>请求的条件:</p>
+<p>a: 当前请求的请求方式必须为post<br>
+b: 当前请求必须传输请求参数_method</p>
+<p>满足条件后,<strong>HiddenHttpMethodFilter</strong> 过滤器就会将当前请求的请求方式转换为请求参数_method的值,因此请求参数<code>_method</code>的值才是最终的请求方式.</p>
+<h4 id="使用方法">使用方法</h4>
+<p>先进行配置:<br>
+在<code>web.xml</code>中添加过滤器:</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!--配置HiddenHttpMethodFilter--&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">filter</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">filter-name</span>&gt;</span>HiddenHttpMethodFilter<span class="tag">&lt;/<span class="name">filter-name</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">filter-class</span>&gt;</span>org.springframework.web.filter.HiddenHttpMethodFilter<span class="tag">&lt;/<span class="name">filter-class</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">filter</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">filter-mapping</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">filter-name</span>&gt;</span>HiddenHttpMethodFilter<span class="tag">&lt;/<span class="name">filter-name</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">url-pattern</span>&gt;</span>/*<span class="tag">&lt;/<span class="name">url-pattern</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">filter-mapping</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>这里老师去深挖了一下<code>HiddenHttpMethodFilter</code>的源码,从而得到了上面的条件.</p>
+<p>所以,在用户操作页面加上对应的<code>_method</code>属性和设置请求方式为<code>post</code>:</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">form</span> <span class="attr">th:action</span>=<span class="string">&quot;@&#123;/user&#125;&quot;</span> <span class="attr">method</span>=<span class="string">&quot;post&quot;</span>&gt;</span></span><br><span class="line">    <span class="comment">&lt;!--传递真正的请求方式--&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;hidden&quot;</span> <span class="attr">name</span>=<span class="string">&quot;_method&quot;</span> <span class="attr">value</span>=<span class="string">&quot;put&quot;</span>&gt;</span></span><br><span class="line">    用户名:<span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;text&quot;</span> <span class="attr">name</span>=<span class="string">&quot;username&quot;</span>&gt;</span><span class="tag">&lt;<span class="name">br</span>&gt;</span></span><br><span class="line">    密码:<span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;text&quot;</span> <span class="attr">name</span>=<span class="string">&quot;password&quot;</span>&gt;</span><span class="tag">&lt;<span class="name">br</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;submit&quot;</span> <span class="attr">value</span>=<span class="string">&quot;修改&quot;</span>&gt;</span><span class="tag">&lt;<span class="name">br</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">form</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>对应的控制器方法:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 修改用户</span></span><br><span class="line"><span class="meta">@RequestMapping(value = &quot;/user&quot;,method = RequestMethod.PUT)</span></span><br><span class="line"><span class="keyword">public</span> String <span class="title function_">updeteUser</span><span class="params">(String username,String password)</span>&#123;</span><br><span class="line">    System.out.println(<span class="string">&quot;修改用户:&quot;</span> + username + <span class="string">&quot;,&quot;</span> + password);</span><br><span class="line">    <span class="keyword">return</span> <span class="string">&quot;success&quot;</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这样<code>HiddenHttpMethodFilter</code>就能将前端的<code>post</code>请求修改成<code>put</code>请求.</p>
+<h3 id="HiddenHttpMethodFilter过滤器和CharacterEncodingFilter过滤器的配置顺序问题"><code>HiddenHttpMethodFilter</code>过滤器和<code>CharacterEncodingFilter</code>过滤器的配置顺序问题</h3>
+<p>当配置有多个过滤器时,过滤器的执行顺序是按照<code>web.xml</code>中编写的顺序执行的.<br>
+在介绍<code>CharacterEncodingFilter</code>过滤器就讲过,该过滤器必须在获取请求参数前执行.</p>
+<div class="warning">
+<p><strong>原因</strong><br>
+在<code>CharacterEncodingFilter</code>中通过<code>request.setCharacterEncoding(encoding)</code>方法设置字符集的而<code>request.setCharacterEncoding(encoding)</code>方法要求前面不能有任何获取请求参数的操作</p>
+</div>
+<p>这里的<code>HiddenHttpMethodFilter</code>过滤器就需要获取一个<code>_method</code>的请求参数.<br>
+所以这个<code>HiddenHttpMethodFilter</code>过滤器要放在<code>CharacterEncodingFilter</code>过滤器之后.</p>
+<h2 id="RESTFul案例展示">RESTFul案例展示</h2>
+<p>路径:<code>springMVC-study/springMVC-rest</code></p>
+<h3 id="准备工作">准备工作</h3>
+<p>就是配置好环境.相关的操作前几个已经model已经很熟练了.<br>
+这里也可以跟着<a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1Ry4y1574R?p=57">老师的视频</a>过程看一看.</p>
+<p>相关实体类:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Employee</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> Integer id;</span><br><span class="line">    <span class="keyword">private</span> String lastName;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> String email;</span><br><span class="line">    <span class="comment">//1 male, 0 female</span></span><br><span class="line">    <span class="keyword">private</span> Integer gender;</span><br><span class="line">    ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这里不连数据库,在<code>Dao</code>层中给静态数据</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Repository</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">EmployeeDao</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> Map&lt;Integer, Employee&gt; employees = <span class="literal">null</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">static</span>&#123;</span><br><span class="line">        employees = <span class="keyword">new</span> <span class="title class_">HashMap</span>&lt;Integer, Employee&gt;();</span><br><span class="line"></span><br><span class="line">        employees.put(<span class="number">1001</span>, <span class="keyword">new</span> <span class="title class_">Employee</span>(<span class="number">1001</span>, <span class="string">&quot;E-AA&quot;</span>, <span class="string">&quot;aa@163.com&quot;</span>, <span class="number">1</span>));</span><br><span class="line">        employees.put(<span class="number">1002</span>, <span class="keyword">new</span> <span class="title class_">Employee</span>(<span class="number">1002</span>, <span class="string">&quot;E-BB&quot;</span>, <span class="string">&quot;bb@163.com&quot;</span>, <span class="number">1</span>));</span><br><span class="line">        employees.put(<span class="number">1003</span>, <span class="keyword">new</span> <span class="title class_">Employee</span>(<span class="number">1003</span>, <span class="string">&quot;E-CC&quot;</span>, <span class="string">&quot;cc@163.com&quot;</span>, <span class="number">0</span>));</span><br><span class="line">        employees.put(<span class="number">1004</span>, <span class="keyword">new</span> <span class="title class_">Employee</span>(<span class="number">1004</span>, <span class="string">&quot;E-DD&quot;</span>, <span class="string">&quot;dd@163.com&quot;</span>, <span class="number">0</span>));</span><br><span class="line">        employees.put(<span class="number">1005</span>, <span class="keyword">new</span> <span class="title class_">Employee</span>(<span class="number">1005</span>, <span class="string">&quot;E-EE&quot;</span>, <span class="string">&quot;ee@163.com&quot;</span>, <span class="number">1</span>));</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="type">Integer</span> <span class="variable">initId</span> <span class="operator">=</span> <span class="number">1006</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">save</span><span class="params">(Employee employee)</span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(employee.getId() == <span class="literal">null</span>)&#123;</span><br><span class="line">            employee.setId(initId++);</span><br><span class="line">        &#125;</span><br><span class="line">        employees.put(employee.getId(), employee);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> Collection&lt;Employee&gt; <span class="title function_">getAll</span><span class="params">()</span>&#123;</span><br><span class="line">        <span class="keyword">return</span> employees.values();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> Employee <span class="title function_">get</span><span class="params">(Integer id)</span>&#123;</span><br><span class="line">        <span class="keyword">return</span> employees.get(id);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">delete</span><span class="params">(Integer id)</span>&#123;</span><br><span class="line">        employees.remove(id);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="准备实现的功能">准备实现的功能</h3>
+<table>
+<thead>
+<tr>
+<th>功能</th>
+<th>URL 地址</th>
+<th>请求方式</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>访问首页</td>
+<td>/</td>
+<td>GET</td>
+</tr>
+<tr>
+<td>查询全部数据</td>
+<td>/employee</td>
+<td>GET</td>
+</tr>
+<tr>
+<td>删除</td>
+<td>/employee/id</td>
+<td>DELETE</td>
+</tr>
+<tr>
+<td>跳转到添加数据页面</td>
+<td>/toAdd</td>
+<td>GET</td>
+</tr>
+<tr>
+<td>执行保存</td>
+<td>/employee</td>
+<td>POST</td>
+</tr>
+<tr>
+<td>跳转到更新数据页面</td>
+<td>/employee/id</td>
+<td>GET</td>
+</tr>
+<tr>
+<td>执行更新</td>
+<td>/employee</td>
+<td>PUT</td>
+</tr>
+</tbody>
+</table>
+<h3 id="具体实现">具体实现</h3>
+<h4 id="访问首页">访问首页</h4>
+<p>就是访问<code>index.html</code>页面.<br>
+写好<code>index.html</code>页面后,直接在<code>springMVC.xml</code>中配置视图控制器和MVC注解驱动.</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!--view-controller配置简单的请求--&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">mvc:view-controller</span> <span class="attr">path</span>=<span class="string">&quot;/&quot;</span> <span class="attr">view-name</span>=<span class="string">&quot;index&quot;</span> /&gt;</span></span><br><span class="line"><span class="comment">&lt;!--同时要开启MVC的注解驱动--&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">mvc:annotation-driven</span> /&gt;</span></span><br></pre></td></tr></table></figure>
+<h4 id="展示所有数据">展示所有数据</h4>
+<p>将dao层的数据共享到<code>request</code>域中.</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//这个也可以用GetMapping来少写一个请求方法</span></span><br><span class="line"><span class="meta">@RequestMapping(value = &quot;/employee&quot;, method = RequestMethod.GET)</span></span><br><span class="line"><span class="keyword">public</span> String <span class="title function_">GetAllEmployee</span><span class="params">(Model model)</span>&#123;</span><br><span class="line">    Collection&lt;Employee&gt; employeeList = employeeDao.getAll();</span><br><span class="line">    <span class="comment">// 共享数据给request域</span></span><br><span class="line">    model.addAttribute(<span class="string">&quot;employeeList&quot;</span>,employeeList);</span><br><span class="line">    <span class="keyword">return</span> <span class="string">&quot;employeeList&quot;</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>编写对应的<code>employeeList</code>页面:</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">h2</span>&gt;</span> 展示员工信息 <span class="tag">&lt;/<span class="name">h2</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">table</span> <span class="attr">border</span>=<span class="string">&quot;1&quot;</span> <span class="attr">cellpadding</span>=<span class="string">&quot;0&quot;</span> <span class="attr">cellspacing</span>=<span class="string">&quot;0&quot;</span> <span class="attr">style</span>=<span class="string">&quot;text-align: center;&quot;</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">tr</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">th</span> <span class="attr">colspan</span>=<span class="string">&quot;5&quot;</span>&gt;</span>Employee Info<span class="tag">&lt;/<span class="name">th</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">tr</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">tr</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">th</span>&gt;</span>id<span class="tag">&lt;/<span class="name">th</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">th</span>&gt;</span>lastName<span class="tag">&lt;/<span class="name">th</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">th</span>&gt;</span>email<span class="tag">&lt;/<span class="name">th</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">th</span>&gt;</span>gender<span class="tag">&lt;/<span class="name">th</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">th</span>&gt;</span>options<span class="tag">&lt;/<span class="name">th</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">tr</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">tr</span> <span class="attr">th:each</span>=<span class="string">&quot;employee: $&#123;employeeList&#125;&quot;</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">td</span> <span class="attr">th:text</span>=<span class="string">&quot;$&#123;employee.id&#125;&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">td</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">td</span> <span class="attr">th:text</span>=<span class="string">&quot;$&#123;employee.lastName&#125;&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">td</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">td</span> <span class="attr">th:text</span>=<span class="string">&quot;$&#123;employee.email&#125;&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">td</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">td</span> <span class="attr">th:text</span>=<span class="string">&quot;$&#123;employee.gender&#125;&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">td</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">td</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">&quot;#&quot;</span>&gt;</span>delete<span class="tag">&lt;/<span class="name">a</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">&quot;#&quot;</span>&gt;</span>update<span class="tag">&lt;/<span class="name">a</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;/<span class="name">td</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">tr</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">table</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>这里用到的是<code>thymeleaf</code>语法.</p>
+<h4 id="删除功能">删除功能</h4>
+<ol>
+<li>先处理超链接的路径问题:<br>
+删除肯定要将删除对象的<code>id</code>传到后端.而这里要做的就是怎么将<code>id</code>数据拼接到请求路径中.<br>
+这里<code>thymeleaf</code>提供了两种写法:</li>
+</ol>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!-- 方式一 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">a</span> <span class="attr">th:href</span>=<span class="string">&quot;@&#123;/employee/&#125; + $&#123;employee.id&#125;&quot;</span>&gt;</span>delete<span class="tag">&lt;/<span class="name">a</span>&gt;</span></span><br><span class="line"><span class="comment">&lt;!-- 方式二 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">a</span> <span class="attr">th:href</span>=<span class="string">&quot;@&#123;&#x27;/employee/&#x27;+ $&#123;employee.id&#125;&#125;&quot;</span>&gt;</span>delete<span class="tag">&lt;/<span class="name">a</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<ol start="2">
+<li>处理修改请求方式的相关问题<mark>删除我们习惯上是通过超链接进行删除.</mark><br>
+而为了提交<code>DELETE</code>请求.<br>
+我们必须满足HiddenHttpMethodFilter处理<code>delete</code>请求的条件:<code>post</code>和<code>_method</code>.</li>
+</ol>
+<p>所以这里处理思路是这样的:<br>
+<mark>给<code>delete</code>超链接绑定一个点击事件.点击后就由隐藏的<code>form</code>表单传递数据.</mark><br>
+这里为了给delete标签加上点击事件,引入了<code>vue.js</code>.<br>
+在<code>webapp</code>下新建<code>static/js</code>目录.vue.js就在其中.(这里我放的是vue2)<br>
+<strong>处理过程</strong>:<br>
+先建立一个隐藏表单:</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">form</span> <span class="attr">id</span>=<span class="string">&quot;deleteForm&quot;</span> <span class="attr">method</span>=<span class="string">&quot;post&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;hidden&quot;</span> <span class="attr">name</span>=<span class="string">&quot;_method&quot;</span> <span class="attr">value</span>=<span class="string">&quot;delete&quot;</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">form</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>然后用<code>vue</code>处理点击事件:<br>
+给整个<code>table</code>标签加上<code>id</code>属性,给<code>delete</code>标签加上<code>@click</code>事件:</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">table</span> <span class="attr">id</span>=<span class="string">&quot;dataTable&quot;</span> <span class="attr">...</span>&gt;</span></span><br><span class="line">    ...</span><br><span class="line">    <span class="tag">&lt;<span class="name">tr</span> <span class="attr">th:each</span>=<span class="string">&quot;employee: $&#123;employeeList&#125;&quot;</span>&gt;</span></span><br><span class="line">        ...</span><br><span class="line">        <span class="tag">&lt;<span class="name">td</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">a</span> @<span class="attr">click</span>=<span class="string">&quot;deleteEmployee&quot;</span> <span class="attr">th:href</span>=<span class="string">&quot;@&#123;&#x27;/employee/&#x27;+ $&#123;employee.id&#125;&#125;&quot;</span>&gt;</span>delete<span class="tag">&lt;/<span class="name">a</span>&gt;</span></span><br><span class="line">            ...</span><br><span class="line">        <span class="tag">&lt;/<span class="name">td</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">tr</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">table</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>给隐藏表单填上<code>id</code>属性,方便操作.</p>
+<p>编写对应<code>vue</code>语句:</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">type</span>=<span class="string">&quot;text/javascript&quot;</span> <span class="attr">th:src</span>=<span class="string">&quot;@&#123;/static/js/vue.js&#125;&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">type</span>=<span class="string">&quot;text/javascript&quot;</span>&gt;</span><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript">    <span class="keyword">var</span> vue = <span class="keyword">new</span> <span class="title class_">Vue</span>(&#123;</span></span><br><span class="line"><span class="language-javascript">        <span class="attr">el</span>:<span class="string">&quot;#dataTable&quot;</span>,</span></span><br><span class="line"><span class="language-javascript">        <span class="attr">methods</span>:&#123;</span></span><br><span class="line"><span class="language-javascript">          <span class="attr">deleteEmployee</span>:<span class="keyword">function</span> (<span class="params">event</span>)&#123;</span></span><br><span class="line"><span class="language-javascript">              <span class="comment">// 通过原生js方式获取DOM元素</span></span></span><br><span class="line"><span class="language-javascript">              <span class="keyword">let</span> deleteForm = <span class="variable language_">document</span>.<span class="title function_">getElementById</span>(<span class="string">&quot;deleteForm&quot;</span>);</span></span><br><span class="line"><span class="language-javascript">              <span class="comment">// 设置表单的action值为原超链接的href属性</span></span></span><br><span class="line"><span class="language-javascript">              <span class="comment">// event触发事件的元素</span></span></span><br><span class="line"><span class="language-javascript">              <span class="comment">// event.target触发事件的元素</span></span></span><br><span class="line"><span class="language-javascript">              <span class="comment">// event.target.href触发事件的元素身上的href属性</span></span></span><br><span class="line"><span class="language-javascript">              deleteForm.<span class="property">action</span> = event.<span class="property">target</span>.<span class="property">href</span>;</span></span><br><span class="line"><span class="language-javascript">              <span class="comment">// 提交表单</span></span></span><br><span class="line"><span class="language-javascript">              deleteForm.<span class="title function_">submit</span>();</span></span><br><span class="line"><span class="language-javascript">              <span class="comment">// 取消事件的默认行为</span></span></span><br><span class="line"><span class="language-javascript">              event.<span class="title function_">preventDefault</span>();</span></span><br><span class="line"><span class="language-javascript">          &#125;</span></span><br><span class="line"><span class="language-javascript">        &#125;,</span></span><br><span class="line"><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript">    &#125;);</span></span><br><span class="line"><span class="language-javascript"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>最后编写控制器相关方法:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 删除某一数据</span></span><br><span class="line"><span class="meta">@RequestMapping(value = &quot;/employee/&#123;id&#125;&quot;,method = RequestMethod.DELETE)</span></span><br><span class="line"><span class="keyword">public</span> String <span class="title function_">deleteEmployee</span><span class="params">(<span class="meta">@PathVariable(&quot;id&quot;)</span> Integer id)</span>&#123;</span><br><span class="line">    employeeDao.delete(id);</span><br><span class="line">    <span class="comment">//删除后,重定向回原展示所有数据的页面</span></span><br><span class="line">    <span class="keyword">return</span> <span class="string">&quot;redirect:/employee&quot;</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>注意这里删除后要重定向回展示所有数据的页面.</p>
+<div class="danger">
+<p><strong>这里还有一个异常</strong><br>
+我们新加的<code>vue.js</code>它获取不了.</p>
+</div>
+<p>原因是:</p>
+<blockquote>
+<p>默认 Servlet 的 RequestDispatcher 必须通过名称而不是路径来检索。换句话说就是 Spring MVC 将接收到的所有请求都看作是一个普通的请求，包括对于静态资源的请求。这样以来，所有对于静态资源的请求都会被看作是一个普通的后台控制器请求，导致请求找不到而报 404 异常错误。来自于<a target="_blank" rel="noopener" href="https://blog.csdn.net/codejas/article/details/80055608">mvc:default-servlet-handler标签的作用</a></p>
+</blockquote>
+<p>这里通过配置<code>mvc:default-servlet-handler</code>标签来解决该问题.<br>
+即在<code>springMVC.xml</code>中加上这个:</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!--开放对静态资源的访问--&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">mvc:default-servlet-handler</span> /&gt;</span></span><br></pre></td></tr></table></figure>
+<p>上面的<a target="_blank" rel="noopener" href="https://blog.csdn.net/codejas/article/details/80055608">mvc:default-servlet-handler标签的作用</a>有更详细的说明.同时老师在<a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1Ry4y1574R?p=65">这个视频</a>中也有讲解.<br>
+在视频中老师强调了一下这两个东西是要同时加的:</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!--开放对静态资源的访问--&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">mvc:default-servlet-handler</span> /&gt;</span></span><br><span class="line"><span class="comment">&lt;!--同时要开启MVC的注解驱动--&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">mvc:annotation-driven</span> /&gt;</span>   </span><br></pre></td></tr></table></figure>
+<h4 id="添加功能">添加功能</h4>
+<p>添加功能就比较简单了.<br>
+先在展示页面添加一个添加的超链接.</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">table</span> <span class="attr">..</span>&gt;</span></span><br><span class="line">    ..</span><br><span class="line">    <span class="tag">&lt;<span class="name">tr</span>&gt;</span></span><br><span class="line">        ...</span><br><span class="line">        <span class="tag">&lt;<span class="name">th</span>&gt;</span>options(<span class="tag">&lt;<span class="name">a</span> <span class="attr">th:href</span>=<span class="string">&quot;@&#123;/toAdd&#125;&quot;</span>&gt;</span>新建<span class="tag">&lt;/<span class="name">a</span>&gt;</span> )<span class="tag">&lt;/<span class="name">th</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">tr</span>&gt;</span></span><br><span class="line">    ...</span><br><span class="line"><span class="tag">&lt;/<span class="name">table</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>这里有个细节就是添加的请求路径是和展示所有数据的路径是要不一样的.</p>
+<p>对应的控制器方法:<br>
+由于添加的请求像首页一样简单,所以这里我们选择配置<code>view-controller</code>.</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">mvc:view-controller</span> <span class="attr">path</span>=<span class="string">&quot;/toAdd&quot;</span> <span class="attr">view-name</span>=<span class="string">&quot;employee_add&quot;</span> /&gt;</span></span><br></pre></td></tr></table></figure>
+<p>然后到新页面中要用到新的功能:执行保存功能.</p>
+<h4 id="执行保存功能">执行保存功能</h4>
+<p>然后就是编写对应的添加新对象的代码:</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">h2</span>&gt;</span>添加新成员<span class="tag">&lt;/<span class="name">h2</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">form</span> <span class="attr">th:action</span>=<span class="string">&quot;@&#123;/employee&#125;&quot;</span> <span class="attr">method</span>=<span class="string">&quot;post&quot;</span>&gt;</span></span><br><span class="line">    lastName:<span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;text&quot;</span> <span class="attr">name</span>=<span class="string">&quot;lastName&quot;</span>&gt;</span><span class="tag">&lt;<span class="name">br</span>&gt;</span></span><br><span class="line">    email:<span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;text&quot;</span> <span class="attr">name</span>=<span class="string">&quot;email&quot;</span>&gt;</span><span class="tag">&lt;<span class="name">br</span>&gt;</span></span><br><span class="line">    gender:<span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;radio&quot;</span> <span class="attr">name</span>=<span class="string">&quot;gender&quot;</span> <span class="attr">value</span>=<span class="string">&quot;1&quot;</span>&gt;</span>male</span><br><span class="line">    <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;radio&quot;</span> <span class="attr">name</span>=<span class="string">&quot;gender&quot;</span> <span class="attr">value</span>=<span class="string">&quot;0&quot;</span>&gt;</span>female<span class="tag">&lt;<span class="name">br</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;submit&quot;</span> <span class="attr">value</span>=<span class="string">&quot;add&quot;</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">form</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>编写对应的控制器方方法:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 添加新的成员</span></span><br><span class="line"><span class="meta">@RequestMapping(value = &quot;/employee&quot;,method = RequestMethod.POST)</span></span><br><span class="line"><span class="comment">// 这里通过实体类传参</span></span><br><span class="line"><span class="keyword">public</span> String <span class="title function_">addEmployee</span><span class="params">(Employee employee)</span>&#123;</span><br><span class="line">    employeeDao.save(employee); <span class="comment">// 对于没有id的,save方法会自动添加id</span></span><br><span class="line">    <span class="keyword">return</span> <span class="string">&quot;redirect:/employee&quot;</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这里<code>value</code>和上面展示的一样,只有请求方法不一样.</p>
+<h4 id="修改功能">修改功能</h4>
+<p>修改对应更新超链接的跳转路径:</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">a</span> <span class="attr">th:href</span>=<span class="string">&quot;@&#123;&#x27;/employee/&#x27; + $&#123;employee.id&#125;&#125;&quot;</span>&gt;</span>update<span class="tag">&lt;/<span class="name">a</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>添加对应的控制器:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//跳转到对应的修改页面</span></span><br><span class="line"><span class="meta">@RequestMapping(value = &quot;/employee/&#123;id&#125;&quot;,method = RequestMethod.GET)</span></span><br><span class="line"><span class="keyword">public</span> String <span class="title function_">getEmployeeId</span><span class="params">(<span class="meta">@PathVariable(&quot;id&quot;)</span>Integer id,Model model)</span>&#123;</span><br><span class="line">    <span class="comment">// 跳转前先将原本的数据共享,方便回显</span></span><br><span class="line">    <span class="type">Employee</span> <span class="variable">employee</span> <span class="operator">=</span> employeeDao.get(id);</span><br><span class="line">    model.addAttribute(<span class="string">&quot;employee&quot;</span>,employee);</span><br><span class="line">    <span class="keyword">return</span> <span class="string">&quot;emplyeeUpdate&quot;</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>先这样写.<br>
+然后就是解决<strong>回显</strong>:</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">h2</span>&gt;</span>修改成员信息<span class="tag">&lt;/<span class="name">h2</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">form</span> <span class="attr">th:action</span>=<span class="string">&quot;@&#123;/employee&#125;&quot;</span> <span class="attr">method</span>=<span class="string">&quot;post&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;hidden&quot;</span> <span class="attr">name</span>=<span class="string">&quot;_method&quot;</span> <span class="attr">value</span>=<span class="string">&quot;put&quot;</span>&gt;</span></span><br><span class="line">    lastName:<span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;text&quot;</span> <span class="attr">name</span>=<span class="string">&quot;lastName&quot;</span> <span class="attr">th:value</span>=<span class="string">&quot;$&#123;employee.lastName&#125;&quot;</span>&gt;</span><span class="tag">&lt;<span class="name">br</span>&gt;</span></span><br><span class="line">    email:<span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;text&quot;</span> <span class="attr">name</span>=<span class="string">&quot;email&quot;</span> <span class="attr">th:value</span>=<span class="string">&quot;$&#123;employee.email&#125;&quot;</span>&gt;</span><span class="tag">&lt;<span class="name">br</span>&gt;</span></span><br><span class="line">    gender:<span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;radio&quot;</span> <span class="attr">name</span>=<span class="string">&quot;gender&quot;</span> <span class="attr">value</span>=<span class="string">&quot;1&quot;</span> <span class="attr">th:field</span>=<span class="string">&quot;$&#123;employee.gender&#125;&quot;</span>&gt;</span>male</span><br><span class="line">    <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;radio&quot;</span> <span class="attr">name</span>=<span class="string">&quot;gender&quot;</span> <span class="attr">value</span>=<span class="string">&quot;0&quot;</span> <span class="attr">th:field</span>=<span class="string">&quot;$&#123;employee.gender&#125;&quot;</span>&gt;</span>female<span class="tag">&lt;<span class="name">br</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;submit&quot;</span> <span class="attr">value</span>=<span class="string">&quot;add&quot;</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">form</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="comment">&lt;!--</span></span><br><span class="line"><span class="comment">        th:field=&quot;$&#123;employee.gender&#125;&quot;可用于单选框或复选框的回显</span></span><br><span class="line"><span class="comment">        若单选框的value和employee.gender的值一致，则添加checked=&quot;checked&quot;属性</span></span><br><span class="line"><span class="comment">--&gt;</span></span><br></pre></td></tr></table></figure>
+<p>这里的<code>th:value</code>就是设置回显数据.</p>
+<p>修改完提交的控制器方法:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 修改后返回展示页面</span></span><br><span class="line"><span class="meta">@RequestMapping(value = &quot;/employee&quot;,method = RequestMethod.PUT)</span></span><br><span class="line"><span class="keyword">public</span> String <span class="title function_">updateEmployee</span><span class="params">(Employee employee)</span>&#123;</span><br><span class="line">    employeeDao.save(employee);</span><br><span class="line">    <span class="keyword">return</span> <span class="string">&quot;redirect:/employee&quot;</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>修改这里就回显有点难度.</p>
+<h3 id="总结-6">总结</h3>
+<p><strong>展示主页</strong>: 非常的简单.<br>
+<strong>展示所有用户数据</strong>: 用到<code>for</code>语句.向<code>request</code>域中共享<code>EmployeeDao</code>的数据.<br>
+<strong>删除指定用户</strong>: 使用到<code>vue</code>事件绑定,js操作<code>DOM</code>元素,修改请求头.<br>
+<strong>添加新用户</strong>: 简单.添加完后要重定向回展示页面.<br>
+<strong>更新用户数据</strong>: model中共享数据,用于修改页面回显.<code>Dao</code>层好像没写修改的代码.</p>
+<!-- 
+::: tips
+**提示**
+这是一个提示
+:::
+
+::: warning
+**注意**
+这是一个警告
+:::
+
+::: danger
+**警告**
+这是一个危险信号
+::: 
+-->
+<!-- 红色字体 -->
+<!-- <font color=#FF0000>内容</font> -->
+<!-- 定义图片的显示百分比显示 -->
+<!-- <img src="图片路径" alt="未加载展示的内容" style="zoom:80%;" /> -->
+    </div>
+
+    
+    
+    
+        <div class="reward-container">
+  <div>您的认可是我不断进步的动力.</div>
+  <button onclick="var qr = document.getElementById('qr'); qr.style.display = (qr.style.display === 'none') ? 'block' : 'none';">
+    打赏
+  </button>
+  <div id="qr" style="display: none;">
+
+  </div>
+</div>
+
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>Li Hui
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="https://qvq-ovo.github.io/springMVC-day4/" title="springMVC-day4">https://qvq-ovo.github.io/springMVC-day4/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+
+      <footer class="post-footer">
+          
+          <div class="post-tags">
+              <a href="/tags/SpringMVC/" rel="tag"><i class="fa fa-tag"></i> SpringMVC</a>
+              <a href="/tags/%E5%B0%9A%E7%A1%85%E8%B0%B7/" rel="tag"><i class="fa fa-tag"></i> 尚硅谷</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/%E5%8D%95%E8%AF%8D%E9%A1%B9%E7%9B%AE/" rel="prev" title="单词项目开发">
+      <i class="fa fa-chevron-left"></i> 单词项目开发
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/springMVC-day5/" rel="next" title="springMVC-day5">
+      springMVC-day5 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#SpringMVC%E7%9A%84%E8%A7%86%E5%9B%BE"><span class="nav-number">1.</span> <span class="nav-text">SpringMVC的视图</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%A6%82%E5%BF%B5"><span class="nav-number">1.1.</span> <span class="nav-text">概念</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ThymeleafView"><span class="nav-number">1.2.</span> <span class="nav-text">ThymeleafView</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%87%8D%E5%AE%9A%E5%90%91%E8%A7%86%E5%9B%BE"><span class="nav-number">1.3.</span> <span class="nav-text">重定向视图</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%A7%86%E5%9B%BE%E6%8E%A7%E5%88%B6%E5%99%A8view-controller"><span class="nav-number">1.4.</span> <span class="nav-text">视图控制器view-controller</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BD%9C%E7%94%A8"><span class="nav-number">1.4.1.</span> <span class="nav-text">作用</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8"><span class="nav-number">1.4.2.</span> <span class="nav-text">使用</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#SpringMVC%E7%9A%84%E8%A7%86%E5%9B%BE%E8%A7%A3%E6%9E%90%E5%99%A8-InternalResourceViewResolver"><span class="nav-number">1.5.</span> <span class="nav-text">SpringMVC的视图解析器:InternalResourceViewResolver</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%80%BB%E7%BB%93-5"><span class="nav-number">1.6.</span> <span class="nav-text">总结</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#RESTFul%E6%A6%82%E5%BF%B5"><span class="nav-number">2.</span> <span class="nav-text">RESTFul概念</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#RESTFul%E7%AE%80%E4%BB%8B"><span class="nav-number">2.1.</span> <span class="nav-text">RESTFul简介</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#RESTFul%E7%9A%84%E5%AE%9E%E7%8E%B0"><span class="nav-number">2.2.</span> <span class="nav-text">RESTFul的实现</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8RESTFul%E6%A8%A1%E6%8B%9Fget%E5%92%8Cpost%E8%AF%B7%E6%B1%82"><span class="nav-number">2.3.</span> <span class="nav-text">使用RESTFul模拟get和post请求</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8HiddenHttpMethodFilter%E5%A4%84%E7%90%86PUT%E5%92%8CDELETE%E8%AF%B7%E6%B1%82"><span class="nav-number">2.4.</span> <span class="nav-text">使用HiddenHttpMethodFilter处理PUT和DELETE请求</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8%E6%96%B9%E6%B3%95"><span class="nav-number">2.4.1.</span> <span class="nav-text">使用方法</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#HiddenHttpMethodFilter%E8%BF%87%E6%BB%A4%E5%99%A8%E5%92%8CCharacterEncodingFilter%E8%BF%87%E6%BB%A4%E5%99%A8%E7%9A%84%E9%85%8D%E7%BD%AE%E9%A1%BA%E5%BA%8F%E9%97%AE%E9%A2%98"><span class="nav-number">2.5.</span> <span class="nav-text">HiddenHttpMethodFilter过滤器和CharacterEncodingFilter过滤器的配置顺序问题</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#RESTFul%E6%A1%88%E4%BE%8B%E5%B1%95%E7%A4%BA"><span class="nav-number">3.</span> <span class="nav-text">RESTFul案例展示</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%87%86%E5%A4%87%E5%B7%A5%E4%BD%9C"><span class="nav-number">3.1.</span> <span class="nav-text">准备工作</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%87%86%E5%A4%87%E5%AE%9E%E7%8E%B0%E7%9A%84%E5%8A%9F%E8%83%BD"><span class="nav-number">3.2.</span> <span class="nav-text">准备实现的功能</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%85%B7%E4%BD%93%E5%AE%9E%E7%8E%B0"><span class="nav-number">3.3.</span> <span class="nav-text">具体实现</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%AE%BF%E9%97%AE%E9%A6%96%E9%A1%B5"><span class="nav-number">3.3.1.</span> <span class="nav-text">访问首页</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%B1%95%E7%A4%BA%E6%89%80%E6%9C%89%E6%95%B0%E6%8D%AE"><span class="nav-number">3.3.2.</span> <span class="nav-text">展示所有数据</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%88%A0%E9%99%A4%E5%8A%9F%E8%83%BD"><span class="nav-number">3.3.3.</span> <span class="nav-text">删除功能</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%B7%BB%E5%8A%A0%E5%8A%9F%E8%83%BD"><span class="nav-number">3.3.4.</span> <span class="nav-text">添加功能</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%89%A7%E8%A1%8C%E4%BF%9D%E5%AD%98%E5%8A%9F%E8%83%BD"><span class="nav-number">3.3.5.</span> <span class="nav-text">执行保存功能</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BF%AE%E6%94%B9%E5%8A%9F%E8%83%BD"><span class="nav-number">3.3.6.</span> <span class="nav-text">修改功能</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%80%BB%E7%BB%93-6"><span class="nav-number">3.4.</span> <span class="nav-text">总结</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Li Hui"
+      src="/images/user.jpg">
+  <p class="site-author-name" itemprop="name">Li Hui</p>
+  <div class="site-description" itemprop="description">以梦为马，明日天涯。。。</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">18</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">5</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">9</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/qvq-ovo" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;qvq-ovo" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:1774660080@qq.com" title="E-Mail → mailto:1774660080@qq.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+  <div class="links-of-blogroll motion-element">
+    <div class="links-of-blogroll-title"><i class="fa fa-link fa-fw"></i>
+      
+    </div>
+    <ul class="links-of-blogroll-list">
+        <li class="links-of-blogroll-item">
+          <a href="https://blog.csdn.net/m0_49879675?type=blog" title="https:&#x2F;&#x2F;blog.csdn.net&#x2F;m0_49879675?type&#x3D;blog" rel="noopener" target="_blank">CSDN</a>
+        </li>
+    </ul>
+  </div>
+
+      </div>
+        <div class="back-to-top motion-element">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Li Hui</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-area"></i>
+    </span>
+      <span class="post-meta-item-text">站点总字数：</span>
+    <span title="站点总字数">29k</span>
+</div>
+
+<!--
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://mist.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Mist</a> 强力驱动
+  </div> -->
+
+        
+<div class="busuanzi-count">
+  <script data-pjax async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/pjax/pjax.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+  <script>
+var pjax = new Pjax({
+  selectors: [
+    'head title',
+    '#page-configurations',
+    '.content-wrap',
+    '.post-toc-wrap',
+    '.languages',
+    '#pjax'
+  ],
+  switches: {
+    '.post-toc-wrap': Pjax.switches.innerHTML
+  },
+  analytics: false,
+  cacheBust: false,
+  scrollTo : !CONFIG.bookmark.enable
+});
+
+window.addEventListener('pjax:success', () => {
+  document.querySelectorAll('script[data-pjax], script#page-configurations, #pjax script').forEach(element => {
+    var code = element.text || element.textContent || element.innerHTML || '';
+    var parent = element.parentNode;
+    parent.removeChild(element);
+    var script = document.createElement('script');
+    if (element.id) {
+      script.id = element.id;
+    }
+    if (element.className) {
+      script.className = element.className;
+    }
+    if (element.type) {
+      script.type = element.type;
+    }
+    if (element.src) {
+      script.src = element.src;
+      // Force synchronous loading of peripheral JS.
+      script.async = false;
+    }
+    if (element.dataset.pjax !== undefined) {
+      script.dataset.pjax = '';
+    }
+    if (code !== '') {
+      script.appendChild(document.createTextNode(code));
+    }
+    parent.appendChild(script);
+  });
+  NexT.boot.refresh();
+  // Define Motion Sequence & Bootstrap Motion.
+  if (CONFIG.motion.enable) {
+    NexT.motion.integrator
+      .init()
+      .add(NexT.motion.middleWares.subMenu)
+      .add(NexT.motion.middleWares.postList)
+      .bootstrap();
+  }
+  NexT.utils.updateSidebarPosition();
+});
+</script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <div id="pjax">
+  
+
+  
+
+    </div>
+</body>
+</html>
