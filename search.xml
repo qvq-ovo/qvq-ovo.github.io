@@ -5,20 +5,37 @@
     <url>/AndroidLeaning02/</url>
     <content><![CDATA[<p>跟着&lt;第一行代码&gt;学一部分</p>
 <span id="more"></span>
-<h3 id="知识点">知识点</h3>
+<h1>第一章</h1>
+<h3 id="视图和逻辑分离">视图和逻辑分离</h3>
 <figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@Override</span></span><br><span class="line"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title function_">onCreate</span><span class="params">(Bundle savedInstanceState)</span> &#123;</span><br><span class="line">    <span class="built_in">super</span>.onCreate(savedInstanceState);</span><br><span class="line">    setContentView(R.layout.activity_main);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>android设计时讲究的是逻辑和视图分离.因此不推荐在活动中直接编写界面的.<br>
 通用的做法是: 在布局文件中编写界面,然后在活动中引入.<br>
 就像这上面第二行就引用了<code>setContentView(R.layout.activity_main);</code>来调用了一个<code>activity_main</code>布局.</p>
 <h3 id="res目录中的资源分布">res目录中的资源分布</h3>
-<p><img src="/AndroidLeaning02/1.jpg" alt="res目录"><br>
-归纳一下:</p>
-<ol>
-<li>所有以<code>drawable</code>开头的文件夹都是用来放图片的.</li>
-<li>所有以<code>mipmap</code>开头的文件夹都是用来放应用图标的.</li>
-<li>所有以<code>values</code>开头的文件夹都是用来放字符串,样式,颜色等配置的.</li>
-<li><code>layout</code>文件夹是用来存放布局文件的.</li>
-</ol>
+<img src="/AndroidLeaning02/1.jpg" alt="res目录" style="zoom:80%;" />
+归纳一下:
+1. 所有以`drawable`开头的文件夹都是用来放图片的.
+2. 所有以`mipmap`开头的文件夹都是用来放应用图标的.
+3. 所有以`values`开头的文件夹都是用来放字符串,样式,颜色等配置的.
+4. `layout`文件夹是用来存放布局文件的.
+<p>引用资源的两种方法:<br>
+资源:</p>
+<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="comment">&lt;!-- res/value/strings.xml --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">resources</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">string</span> <span class="attr">name</span>=<span class="string">&quot;app_name&quot;</span>&gt;</span>HelloWorld<span class="tag">&lt;/<span class="name">string</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">resources</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>在代码中使用<code>R.string.hello_world</code>获取该字段的引用</li>
+<li>在XML中通过<code>@string/hello_world</code>获取该字段的引用</li>
+</ul>
+<p><code>string</code>是可以替换的:<br>
+图片     — drawable<br>
+图标     — mipmap<br>
+布局文件 — layout</p>
+<h3 id="配置文件">配置文件</h3>
+<p>这一章详细说明android每个文件夹及其中文件的作用</p>
+<h3 id="日志工具Log">日志工具Log</h3>
+<p><code>Log</code>类中一共提供了5中打印日志的方法.<br>
+<code>Log.v()</code> -&gt; <code>Log.d()</code> -&gt; <code>Log.i()</code> -&gt; <code>Log.w()</code> -&gt; <code>Log.e()</code>.<br>
+级别是逐渐递增的.</p>
+<p>以<code>Log.d()</code>为例:Log.d()要传入两个参数:<code>tag , msg</code>.<code>tag</code>用于打印信息的过滤.<code>msg</code>为具体的信息.</p>
 <!-- 
 ::: tips
 **提示**
@@ -40,10 +57,10 @@
 <!-- 定义图片的显示百分比显示 -->
 <!-- <img src="图片路径" alt="未加载展示的内容" style="zoom:80%;" /> -->]]></content>
       <categories>
-        <category>Android</category>
+        <category>Android学习</category>
       </categories>
       <tags>
-        <tag>安卓开发学习</tag>
+        <tag>安卓</tag>
       </tags>
   </entry>
   <entry>
