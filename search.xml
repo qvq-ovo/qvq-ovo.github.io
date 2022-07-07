@@ -115,7 +115,10 @@ acwing1874题:哞加密</p>
   <entry>
     <title>AndroidLeaning03</title>
     <url>/AndroidLeaning03/</url>
-    <content><![CDATA[<p>布局管理器介绍基本UI组件语法</p>
+    <content><![CDATA[<ul>
+<li>布局管理器介绍</li>
+<li>基本UI组件语法</li>
+</ul>
 <span id="more"></span>
 <h2 id="P20-P48笔记">P20~P48笔记</h2>
 <h3 id="常见的布局管理器">常见的布局管理器</h3>
