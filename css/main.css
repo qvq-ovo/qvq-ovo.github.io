@@ -1189,7 +1189,7 @@ pre .javascript .function {
 }
 .links-of-author a::before,
 .links-of-author span.exturl::before {
-  background: #0e7dff;
+  background: #0a50ff;
   border-radius: 50%;
   content: ' ';
   display: inline-block;
@@ -2524,7 +2524,7 @@ hr {
   }
 }
 .my-post-time {
-  font-size: 11px;
+  font-size: 14px;
   position: absolute;
   color: #fff;
   background-color: #49b1f5;
@@ -2544,33 +2544,17 @@ hr {
 }
 a.my-post-title-link:before {
   top: 10px;
-  width: 18px;
-  height: 18px;
+  width: 20px;
+  height: 20px;
   content: "📚";
   margin-right: 5px;
   font: normal normal normal 14px/1 FontAwesome;
-  font-size: 15px;
+  font-size: 18px;
   line-height: 18px;
-}
-.my-post:hover {
-  transform: scale(1.1);
-  box-shadow: 10px 10px 15px 2px rgba(0,0,0,0.12), 0 0 6px 0 rgba(104,104,105,0.1);
-  border-radius: 30px;
-  width: 400px;
-  padding: 1px 10px;
-  margin-left: 25px;
-  font-size: 16px;
-  transition-duration: 0.15s;
-}
-@media (max-width: 767px) {
-  .my-post:hover {
-    width: 260px;
-    margin-left: 18px;
-  }
 }
 a.my-post-title-link {
   text-decoration: none;
-  font-size: 15px;
+  font-size: 18px;
   font-weight: 400;
 }
 @media (max-width: 767px) {
@@ -2585,6 +2569,7 @@ a.my-post-title-link {
   text-decoration: none;
   font-size: 0.8rem;
   cursor: pointer;
+  margin-bottom: 30px;
 }
 .my-post-header {
   position: top;
