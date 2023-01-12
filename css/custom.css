@@ -1,3 +1,25 @@
+
+/* 代码框设置 start */
+/* 代码框圆角 */
+#article-container figure.highlight {
+  border-radius: 10px;
+}
+/* 展开放到右边 */
+#article-container figure.highlight .highlight-tools .expand {
+  right: 0;
+}
+
+/* 代码框设置 end */
+
+/* 文章双侧栏显示Bug修复 start */
+/* 翻页按钮居中 */
+#pagination {
+  width: 100%;
+  margin: auto;
+}
+/* 文章双侧栏显示Bug修复 end */
+
+
 /* 导航栏样式改变 start */
 /* 页脚与头图透明 */
 #footer {
@@ -219,14 +241,15 @@ h6::before {
 }
 
 /* 黑夜模式适配 */
-[data-theme="dark"] #aside-content>.card-widget.card-info {
-  background: #191919ee;
+[data-theme="dark"] #aside-content>.card-info {
+  background: #1d1e22;
+  
 }
 
 /* 个人信息Follow me按钮 */
 #aside-content>.card-widget.card-info>#card-info-btn {
   background-color: #3eb8be;
-  border-radius: 8px;
+  border-radius: 20px;
 }
 
 /* 侧边栏个人信息卡片动态渐变色 end */
