@@ -4,6 +4,19 @@
   
     
     <entry>
+      <title>test使用</title>
+      <link href="/2023/01/12/test%E4%BD%BF%E7%94%A8/"/>
+      <url>/2023/01/12/test%E4%BD%BF%E7%94%A8/</url>
+      
+        <content type="html"><![CDATA[<div class="note info no-icon flat"><font size=4><b>前言📝</b></font><p>美化主题</p></div><p>在前面的话</p><h1 id="和"><a href="#和" class="headerlink" title="和"></a>和</h1><h2 id="好"><a href="#好" class="headerlink" title="好"></a>好</h2><h3 id="还"><a href="#还" class="headerlink" title="还"></a>还</h3><h4 id="会"><a href="#会" class="headerlink" title="会"></a>会</h4><p><strong>会</strong><br><mark>高亮</mark></p>]]></content>
+      
+      
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>spring5-day1</title>
       <link href="/2023/01/12/spring5-day1/"/>
       <url>/2023/01/12/spring5-day1/</url>
@@ -60,7 +73,7 @@
       <link href="/2023/01/11/%E5%8D%9A%E5%AE%A2%E7%BE%8E%E5%8C%96-%E4%B8%80/"/>
       <url>/2023/01/11/%E5%8D%9A%E5%AE%A2%E7%BE%8E%E5%8C%96-%E4%B8%80/</url>
       
-        <content type="html"><![CDATA[<h2 id="1-美化进度报告"><a href="#1-美化进度报告" class="headerlink" title="1.美化进度报告"></a>1.美化进度报告</h2><p>完成Hexo博客的再搭建,跟着<a href="https://www.fomal.cc/">Fomalhaut🥝</a>大神一步一步魔改自己的博客.</p>]]></content>
+        <content type="html"><![CDATA[<div class="note info no-icon flat"><font size=4><b>前言📝</b></font><p>完成Hexo博客的再搭建,跟着<a href="https://www.fomal.cc/">Fomalhaut🥝</a>大神一步一步魔改自己的博客.</p></div><h2 id="1-美化进度报告"><a href="#1-美化进度报告" class="headerlink" title="1.美化进度报告"></a>1.美化进度报告</h2><ul><li></li><li>文章置顶滚动栏(店长)</li><li>外挂标签的引入（店长）</li><li></li></ul>]]></content>
       
       
       <categories>

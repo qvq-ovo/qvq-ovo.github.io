@@ -1,12 +1,12 @@
 
-/* 代码框设置 start */
-/* 代码框圆角 */
-#article-container figure.highlight {
-  border-radius: 10px;
+svg.icon {
+  width: 1.28em;
+  height: 1.28em;
+  vertical-align: -0.15em;
+  fill: currentColor;
+  overflow: hidden;
 }
 
-
-/* 代码框设置 end */
 
 /* 文章双侧栏显示Bug修复 start */
 /* 翻页按钮居中 */
@@ -128,19 +128,19 @@ h6::before {
   margin-top: -0.23rem;
 }
 #content-inner.layout h2::before {
-  color: #fb7061;
+  color: #5cd2f6d7;
   margin-left: -1.35rem;
   font-size: 1.1rem;
   margin-top: -0.12rem;
 }
 #content-inner.layout h3::before {
-  color: #ffbf00;
+  color: #0df237e6;
   margin-left: -1.22rem;
   font-size: 0.95rem;
   margin-top: -0.09rem;
 }
 #content-inner.layout h4::before {
-  color: #a9e000;
+  color: #f5884de1;
   margin-left: -1.05rem;
   font-size: 0.8rem;
   margin-top: -0.09rem;
@@ -152,7 +152,7 @@ h6::before {
   margin-top: 0rem;
 }
 #content-inner.layout h6::before {
-  color: #5ec1e0;
+  color: #a9e000;
   margin-left: -0.9rem;
   font-size: 0.66rem;
   margin-top: 0rem;
@@ -253,8 +253,8 @@ h6::before {
 
 /* 页面样式调节 start */
 :root {
-  --trans-light: rgba(255, 255, 255, 0.88);
-  --trans-dark: rgba(25, 25, 25, 0.88);
+  --trans-light: rgba(255, 255, 255, 0.85);
+  --trans-dark: rgba(25, 25, 25, 0.85);
   --border-style: 1px solid rgb(169, 169, 169);
   --backdrop-filter: blur(5px) saturate(150%);
 }
@@ -287,12 +287,25 @@ div#archive {
 
 /* 导航栏 */
 #page-header.nav-fixed #nav {
-  background: rgba(255, 255, 255, 0.75);
+  background: linear-gradient(60deg,#ffd7e4 0,#c8f1ff 93%);
+  opacity: .85;
   backdrop-filter: var(--backdrop-filter);
+  transition: none!important;
+
+
+  
+}
+
+#page-header.nav-visible #nav {
+  -webkit-transition: none!important;
+  transition: none!important;
+  -webkit-transform: translate3d(0,100%,0)!important;
+  transform: none!important;
+  
 }
 
 [data-theme="dark"] #page-header.nav-fixed #nav {
-  background: rgba(0, 0, 0, 0.7) !important;
+  background: rgba(0, 0, 0, 0.95) !important;
 }
 
 /* 夜间模式遮罩 */
