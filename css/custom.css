@@ -4,10 +4,7 @@
 #article-container figure.highlight {
   border-radius: 10px;
 }
-/* 展开放到右边 */
-#article-container figure.highlight .highlight-tools .expand {
-  right: 0;
-}
+
 
 /* 代码框设置 end */
 
