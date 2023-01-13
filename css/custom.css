@@ -118,6 +118,26 @@ svg.icon {
   background: transparent !important;
 }
 
+#post-info .post-title {
+  margin-bottom: 8px;
+  color: #49c9f5;
+  font-weight: normal;
+  font-size: 3em;
+  font-weight: 800;
+  line-height: 1.5;
+  -webkit-line-clamp: 3;
+}
+#page-header #site-title {
+  margin: 0;
+  color: #49c9f5;
+  font-size: 3em;
+  font-weight: 800;
+}
+#page-header #site-subtitle {
+  color:#11ee5e;
+  
+}
+
 
 /* 导航栏样式改变 start */
 
@@ -319,11 +339,7 @@ button#go-up:hover #percent {
 }
 /* 滚动条样式 end */
 
-/* 白天文章头部加毛玻璃效果 */
-[data-theme=light] #footer::before, [data-theme=light] #page-header:before {
-  background-color: rgba(0,0,0,.25)!important;
-  z-index: -3;
-}
+
 
 /* 白天雪花效果 */
 [data-theme="light"] #snow{
