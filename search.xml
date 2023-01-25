@@ -38,14 +38,14 @@
       
       <categories>
           
-          <category> bat脚本 </category>
+          <category> 脚本 </category>
           
       </categories>
       
       
         <tags>
             
-            <tag> 脚本 </tag>
+            <tag> bat </tag>
             
         </tags>
       
@@ -92,32 +92,6 @@
     
     
     <entry>
-      <title>spring5-day4</title>
-      <link href="/2023/01/13/spring5-day4/"/>
-      <url>/2023/01/13/spring5-day4/</url>
-      
-        <content type="html"><![CDATA[<div class="note info no-icon flat"><font size=4><b>前言📝</b></font><p>写文章基本大意</p></div>]]></content>
-      
-      
-      
-    </entry>
-    
-    
-    
-    <entry>
-      <title>spring5-day3</title>
-      <link href="/2023/01/13/spring5-day3/"/>
-      <url>/2023/01/13/spring5-day3/</url>
-      
-        <content type="html"><![CDATA[<div class="note info no-icon flat"><font size=4><b>前言📝</b></font><p>写文章基本大意</p></div>]]></content>
-      
-      
-      
-    </entry>
-    
-    
-    
-    <entry>
       <title>spring5-day2</title>
       <link href="/2023/01/13/spring5-day2/"/>
       <url>/2023/01/13/spring5-day2/</url>
@@ -127,7 +101,7 @@
       
       <categories>
           
-          <category> SSM </category>
+          <category> java </category>
           
       </categories>
       
@@ -152,7 +126,7 @@
       
       <categories>
           
-          <category> SSM </category>
+          <category> java </category>
           
       </categories>
       
@@ -197,7 +171,7 @@
       <link href="/2023/01/11/%E5%8D%9A%E5%AE%A2%E7%BE%8E%E5%8C%96-%E4%B8%80/"/>
       <url>/2023/01/11/%E5%8D%9A%E5%AE%A2%E7%BE%8E%E5%8C%96-%E4%B8%80/</url>
       
-        <content type="html"><![CDATA[<div class="note info no-icon flat"><font size=4><b>前言📝</b></font><p>完成Hexo博客的再搭建,跟着<a href="https://www.fomal.cc/">Fomalhaut🥝</a>大神成功魔改自己的博客首页.</p></div><h2 id="1-美化进度报告"><a href="#1-美化进度报告" class="headerlink" title="1.美化进度报告"></a>1.美化进度报告</h2><div class='checkbox cyan checked'><input type="checkbox" checked="checked"/>            <p>文章置顶滚动栏(店长)</p>            </div><div class='checkbox cyan checked'><input type="checkbox" checked="checked"/>            <p>外挂标签的引入（店长）</p>            </div><p>有了外挂标签,支持非常多的文章样式</p><div class='checkbox cyan checked'><input type="checkbox" checked="checked"/>            <p>按键防抖</p>            </div><div class='checkbox cyan checked'><input type="checkbox" checked="checked"/>            <p>Vue + Element样式弹窗</p>            </div><p>配合按键防抖=&gt; 不同按键出现不同反应(复制弹窗)</p><div class='checkbox cyan checked'><input type="checkbox" checked="checked"/>            <p>配置手机PC页面白天黑夜共四个背景图(店长)</p>            </div><div class='checkbox cyan checked'><input type="checkbox" checked="checked"/>            <p>PDF 插件安装</p>            </div><p>我这需要将 ejs 升级到 2.5.5以上</p><div class='checkbox cyan checked'><input type="checkbox" checked="checked"/>            <p>宽屏适配</p>            </div><div class='checkbox cyan checked'><input type="checkbox" checked="checked"/>            <p>文章三栏(需要微调)</p>            </div><p>使用文章三栏不可使用 文章双侧栏显示(小冰) </p><div class='checkbox cyan checked'><input type="checkbox" checked="checked"/>            <p>右边按钮阅读进度（Leonus）</p>            </div><div class='checkbox cyan checked'><input type="checkbox" checked="checked"/>            <p>直达底部按钮</p>            </div><div class='checkbox cyan checked'><input type="checkbox" checked="checked"/>            <p>文章页顶部波浪线</p>            </div><p>完成了,还未微调 css 中<code>fill</code>属性.感觉有点突兀</p><div class='checkbox cyan checked'><input type="checkbox" checked="checked"/>            <p>白天雪花特效</p>            </div><p>个人感觉要去找更钟意的下落特效</p><div class='checkbox cyan checked'><input type="checkbox" checked="checked"/>            <p>导航栏魔改增强版(LYX)</p>            </div><div class='checkbox cyan checked'><input type="checkbox" checked="checked"/>            <p>页面样式调节</p>            </div><p>页面要经常调节</p><h2 id="阶段性总结一-23-1-13"><a href="#阶段性总结一-23-1-13" class="headerlink" title="阶段性总结一 23/1/13"></a>阶段性总结一 23/1/13</h2><p>页面配置在我连续两天摸着大佬<a href="https://www.fomal.cc/">Fomalhaut🥝</a>文章终于算的上是看的过去了.</p><p>待解决问题:</p><ul><li>字体字号</li><li>文章置顶滚动栏(我希望是横向滚动的)</li><li>首页分类磁贴(小冰)安装</li><li>右侧功能栏 更加丰富一些</li><li>阅读模式</li><li>其他页面的配置</li></ul><p>等下次有机会再进一步修改吧!</p>]]></content>
+        <content type="html"><![CDATA[<div class="note info no-icon flat"><font size=4><b>前言📝</b></font><p>完成Hexo博客的再搭建,在学习<a href="https://www.fomal.cc/">Fomalhaut🥝</a>大神视频后成功魔改自己的博客首页.</p></div><h2 id="1-美化进度报告"><a href="#1-美化进度报告" class="headerlink" title="1.美化进度报告"></a>1.美化进度报告</h2><div class='checkbox cyan checked'><input type="checkbox" checked="checked"/>            <p>文章置顶滚动栏(店长)</p>            </div><div class='checkbox cyan checked'><input type="checkbox" checked="checked"/>            <p>外挂标签的引入（店长）</p>            </div><p>有了外挂标签,支持非常多的文章样式</p><div class='checkbox cyan checked'><input type="checkbox" checked="checked"/>            <p>按键防抖</p>            </div><div class='checkbox cyan checked'><input type="checkbox" checked="checked"/>            <p>Vue + Element样式弹窗</p>            </div><p>配合按键防抖=&gt; 不同按键出现不同反应(复制弹窗)</p><div class='checkbox cyan checked'><input type="checkbox" checked="checked"/>            <p>配置手机PC页面白天黑夜共四个背景图(店长)</p>            </div><div class='checkbox cyan checked'><input type="checkbox" checked="checked"/>            <p>PDF 插件安装</p>            </div><p>我这需要将 ejs 升级到 2.5.5以上</p><div class='checkbox cyan checked'><input type="checkbox" checked="checked"/>            <p>宽屏适配</p>            </div><div class='checkbox cyan checked'><input type="checkbox" checked="checked"/>            <p>文章三栏(需要微调)</p>            </div><p>使用文章三栏不可使用 文章双侧栏显示(小冰) </p><div class='checkbox cyan checked'><input type="checkbox" checked="checked"/>            <p>右边按钮阅读进度（Leonus）</p>            </div><div class='checkbox cyan checked'><input type="checkbox" checked="checked"/>            <p>直达底部按钮</p>            </div><div class='checkbox cyan checked'><input type="checkbox" checked="checked"/>            <p>文章页顶部波浪线</p>            </div><p>完成了,还未微调 css 中<code>fill</code>属性.感觉有点突兀</p><div class='checkbox cyan checked'><input type="checkbox" checked="checked"/>            <p>白天雪花特效</p>            </div><p>个人感觉要去找更钟意的下落特效</p><div class='checkbox cyan checked'><input type="checkbox" checked="checked"/>            <p>导航栏魔改增强版(LYX)</p>            </div><div class='checkbox cyan checked'><input type="checkbox" checked="checked"/>            <p>页面样式调节</p>            </div><p>页面要经常调节</p><h2 id="阶段性总结一-23-1-13"><a href="#阶段性总结一-23-1-13" class="headerlink" title="阶段性总结一 23/1/13"></a>阶段性总结一 23/1/13</h2><p>页面配置在我连续两天摸着大佬<a href="https://www.fomal.cc/">Fomalhaut🥝</a>文章终于算的上是看的过去了.</p><p>待解决问题:</p><ul><li>字体字号</li><li>文章置顶滚动栏(我希望是横向滚动的)</li><li>首页分类磁贴(小冰)安装</li><li>右侧功能栏 更加丰富一些</li><li>阅读模式</li><li>其他页面的配置</li></ul><p>等下次有机会再进一步修改吧!</p>]]></content>
       
       
       <categories>
