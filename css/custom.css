@@ -8,6 +8,15 @@ svg.icon {
 }
 /* 外部引入图标 end */
 
+/* h2 h3靠边 */
+#article-container.post-content h2 {
+  padding-left: 0px;
+}
+#article-container.post-content h3 {
+  padding-left: 0px;
+}
+/*  */
+
 /* 宽屏适配 start */
 /* 全局宽度 */
 .layout {
