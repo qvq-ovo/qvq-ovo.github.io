@@ -8,14 +8,14 @@ svg.icon {
 }
 /* 外部引入图标 end */
 
-/* h2 h3靠边 */
+/* h2 h3靠边 start*/
 #article-container.post-content h2 {
   padding-left: 0px;
 }
 #article-container.post-content h3 {
   padding-left: 0px;
 }
-/*  */
+/* h2 h3靠边 end */
 
 /* 宽屏适配 start */
 /* 全局宽度 */
@@ -344,7 +344,7 @@ button#go-up:hover #percent {
 
 ::-moz-selection {
   color: #fff;
-  background-color: var(--theme-color);
+  background-color: #49b1f5;
 }
 /* 滚动条样式 end */
 
